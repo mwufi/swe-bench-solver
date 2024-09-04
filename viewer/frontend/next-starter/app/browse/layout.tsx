@@ -1,4 +1,3 @@
-
 import { Repository, TestCase } from '@/app/types';
 
 async function getRepositories(): Promise<Repository[]> {
@@ -15,11 +14,8 @@ async function getRepositories(): Promise<Repository[]> {
     }
 }
 
-
 import React from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, ChevronDown } from "lucide-react";
 import Link from 'next/link';
 
 export default async function BrowseLayout({
@@ -32,27 +28,20 @@ export default async function BrowseLayout({
     return (
         <div className="flex h-screen">
             {/* Repositories Column */}
-            <Collapsible className="w-[200px] bg-gray-100 p-4 overflow-y-auto">
-                <CollapsibleTrigger asChild>
-                    <Button variant="ghost" className="w-full flex justify-between items-center mb-2">
-                        <span>Repositories</span>
-                        <ChevronRight className="h-4 w-4" />
-                    </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                    <ul>
-                        {repositories.map((repo) => (
-                            <li key={repo.id} className="py-2">
-                                <Link href={`/browse/${encodeURIComponent(repo.name)}`} passHref>
-                                    <Button variant="ghost" className="w-full text-left">
-                                        {repo.name}
-                                    </Button>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </CollapsibleContent>
-            </Collapsible>
+            <div className="w-[230px] bg-gray-100 overflow-y-auto">
+                <h2 className="text-lg font-semibold mb-4 text-left p-4">Repositories</h2>
+                <ul className="text-left">
+                    {repositories.map((repo) => (
+                        <li key={repo.id} className="py-2">
+                            <Link href={`/browse/${encodeURIComponent(repo.name)}`} passHref>
+                                <Button variant="ghost" className="w-full text-left justify-start">
+                                    {repo.name}
+                                </Button>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <div className="flex-1 overflow-y-auto">
                 {children}
             </div>

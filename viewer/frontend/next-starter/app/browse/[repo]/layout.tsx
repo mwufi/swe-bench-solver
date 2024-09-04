@@ -28,18 +28,19 @@ export default function BrowseLayout({ children, params }: { children: React.Rea
     }, [params.repo]);
 
     return (
-        <div className="flex">
+        <div className="flex h-screen">
             {/* Problems Column */}
-            <div className="w-1/4 bg-white border-l border-r border-gray-200 p-4 overflow-y-auto">
+            <div className="w-[400px] bg-white border-l border-r border-gray-200 p-4 overflow-y-auto">
                 <h2 className="text-xl font-semibold mb-4">Problems</h2>
-                <ul>
+                <ul className="space-y-2">
                     {testCases?.map((testCase) => (
-                        <li key={testCase.instance_id} className="py-2">
-                            <Button variant="ghost" className="w-full text-left" asChild>
-                                <Link href={`/browse/${encodeURIComponent(testCase.repo)}/${testCase.instance_id}`}>
-                                    {testCase.problem_statement.substring(0, 50)}...
-                                </Link>
-                            </Button>
+                        <li key={testCase.instance_id}>
+                            <Link href={`/browse/${encodeURIComponent(testCase.repo)}/${testCase.instance_id}`}
+                                  className="block hover:bg-gray-100 rounded p-2 transition-colors duration-200">
+                                <p className="text-sm text-gray-800 line-clamp-2">
+                                    {testCase.problem_statement}
+                                </p>
+                            </Link>
                         </li>
                     ))}
                 </ul>
