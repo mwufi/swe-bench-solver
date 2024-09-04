@@ -1,10 +1,20 @@
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from typing import List, Optional
-import json
-from datetime import datetime
+from urllib.parse import unquote
 
 app = FastAPI()
+
+from fastapi.middleware.cors import CORSMiddleware
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allow requests from the frontend
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 
 class TestCase(BaseModel):
@@ -39,8 +49,8 @@ def load_testcases():
 test_cases = load_testcases()
 
 
-@app.get("/test_cases", response_model=List[TestCase])
-async def get_test_cases(
+# helper method
+def get_test_cases(
     repo: Optional[str] = Query(None, description="Filter by repository"),
     min_patch_length: Optional[int] = Query(None, description="Minimum patch length"),
     max_patch_length: Optional[int] = Query(None, description="Maximum patch length"),
@@ -76,8 +86,17 @@ async def get_test_cases_json(
     min_patch_length: Optional[int] = Query(None, description="Minimum patch length"),
     max_patch_length: Optional[int] = Query(None, description="Maximum patch length"),
 ):
-    filtered_cases = await get_test_cases(repo, min_patch_length, max_patch_length)
+    # un-urlencode repo
+    repo = unquote(repo)
+    print(f"Fetching test cases for repo: {repo}")
+    filtered_cases = get_test_cases(repo, min_patch_length, max_patch_length)
+    print(f"Returning {len(filtered_cases)} instances!!")
     return {"test_cases": [tc.dict() for tc in filtered_cases]}
+
+
+@app.get("/bye")
+async def bye():
+    return {"message": "bye"}
 
 
 @app.get("/test_case/{instance_id}")
@@ -91,4 +110,4 @@ async def get_test_case_details(instance_id: str):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)

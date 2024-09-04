@@ -56,7 +56,7 @@ export default async function SWEBenchViewer() {
               <ul className="divide-y divide-gray-200">
                 {testCases.map((testCase) => (
                   <li key={testCase.instance_id}>
-                    <Link href={`/test_case/${testCase.instance_id}`} className="block hover:bg-gray-50">
+                    <Link href={`/browse/${testCase.instance_id}`} className="block hover:bg-gray-50">
                       <div className="px-4 py-4 sm:px-6">
                         <div className="flex items-center justify-between">
                           <p className="text-sm font-medium text-indigo-600 truncate">{testCase.repo}</p>
