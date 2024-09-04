@@ -1,0 +1,32 @@
+[project]
+name = "swe-bench-solver"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Your Name", email = "you@example.com" }
+]
+dependencies = [
+    "pandas>=2.2.2",
+    "pyarrow>=17.0.0",
+    "fastparquet>=2024.5.0",
+    "huggingface-hub>=0.24.6",
+    "ipykernel>=6.29.5",
+    "uvicorn>=0.30.6",
+    "fastapi>=0.112.2",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/swe_bench_solver"]
