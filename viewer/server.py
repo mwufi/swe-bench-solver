@@ -24,6 +24,7 @@ class TestCase(BaseModel):
     patch: str
     test_patch: str
     problem_statement: str
+    issue_name: Optional[str]
     hints_text: str
     created_at: str
     version: str
@@ -32,21 +33,33 @@ class TestCase(BaseModel):
     environment_setup_commit: str
 
 
-def load_testcases():
-    import pandas as pd
+import pandas as pd
 
-    DATASET_PATH = "hf://datasets/princeton-nlp/SWE-bench/"
-    splits = {
-        "dev": "data/dev-00000-of-00001.parquet",
-        "test": "data/test-00000-of-00001.parquet",
-        "train": "data/train-00000-of-00001.parquet",
-    }
-    df = pd.read_parquet(DATASET_PATH + splits["dev"])
-    return [TestCase(**tc) for tc in df.to_dict("records")]
+
+def load_testcases(repo: str, split: str = "dev"):
+    if repo == "lite":
+        DATASET_PATH = "hf://datasets/princeton-nlp/SWE-bench_Lite/"
+        splits = {"dev": "data/dev-00000-of-00001.parquet", "test": "data/test-00000-of-00001.parquet"}
+    else:
+        DATASET_PATH = "hf://datasets/princeton-nlp/SWE-bench/"
+        splits = {
+            "dev": "data/dev-00000-of-00001.parquet",
+            "test": "data/test-00000-of-00001.parquet",
+            "train": "data/train-00000-of-00001.parquet",
+        }
+
+    df = pd.read_parquet(DATASET_PATH + splits[split])
+    records = df.to_dict("records")
+    for record in records:
+        record["issue_name"] = record["problem_statement"].split("\n")[0] if record["problem_statement"] else None
+    return [TestCase(**tc) for tc in records]
 
 
 # Load test cases
-test_cases = load_testcases()
+current_repo = "lite"
+current_split = "test"
+
+test_cases = load_testcases(current_repo, current_split)
 
 
 # helper method
@@ -72,7 +85,7 @@ def get_test_cases(
 @app.get("/repos")
 async def get_repos():
     repos = list(set(tc.repo for tc in test_cases))
-    return {"repos": [{"id": repo, "name": repo} for repo in repos]}
+    return {"id": current_repo, "split": current_split, "repos": [{"id": repo, "name": repo} for repo in repos]}
 
 
 @app.get("/")

@@ -1,16 +1,16 @@
-import { Repository, TestCase } from '@/app/types';
+import { Repository } from '@/app/types';
 
-async function getRepositories(): Promise<Repository[]> {
+async function getRepositories(): Promise<{ repos: Repository[], id: string, split: string }> {
     try {
         const response = await fetch('http://localhost:8000/repos');
         if (!response.ok) {
             throw new Error('Failed to fetch repositories');
         }
         const data = await response.json();
-        return data.repos;
+        return { repos: data.repos, id: data.id, split: data.split };
     } catch (error) {
         console.error('Error fetching repositories:', error);
-        return [];
+        return { repos: [], id: '', split: '' };
     }
 }
 
@@ -29,9 +29,17 @@ export default async function BrowseLayout({
         <div className="flex h-screen">
             {/* Repositories Column */}
             <div className="w-[230px] bg-gray-100 overflow-y-auto">
-                <h2 className="text-lg font-semibold mb-4 text-left p-4">Repositories</h2>
+                <Link href="/browse" className="block">
+                    <h2 className="text-lg font-semibold mb-4 text-left p-4 hover:underline">SWE Bench Viewer</h2>
+                </Link>
+                <div className="px-4 mb-4">
+                    <p className="text-sm font-medium">Current Dataset:</p>
+                    <p className="text-sm">{repositories.id}</p>
+                    <p className="text-sm font-medium mt-2">Split:</p>
+                    <p className="text-sm">{repositories.split}</p>
+                </div>
                 <ul className="text-left">
-                    {repositories.map((repo) => (
+                    {repositories.repos.map((repo) => (
                         <li key={repo.id} className="py-2">
                             <Link href={`/browse/${encodeURIComponent(repo.name)}`} passHref>
                                 <Button variant="ghost" className="w-full text-left justify-start">

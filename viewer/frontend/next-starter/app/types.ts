@@ -10,6 +10,7 @@ export interface TestCase {
     patch: string;
     test_patch: string;
     problem_statement: string;
+    issue_name: string | null;
     hints_text: string;
     created_at: string;
     version: string;

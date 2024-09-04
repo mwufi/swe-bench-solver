@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { TestCase } from '@/app/types';
 import MultiTestDisplay from './MultiTestDisplay';
+import MarkdownPreviewer from './MarkdownPreviewer';
 
 interface TestCaseProps {
     testCase: TestCase;
@@ -22,7 +23,7 @@ const SweBenchInstance: React.FC<TestCaseProps> = ({ testCase }) => {
             <CardContent className="space-y-4">
                 <div>
                     <h3 className="text-lg font-semibold">Problem Statement</h3>
-                    <p className="mt-1 text-gray-600">{testCase.problem_statement}</p>
+                    <MarkdownPreviewer markdown={testCase.problem_statement} />
                 </div>
                 <Separator />
                 <div>
@@ -33,8 +34,8 @@ const SweBenchInstance: React.FC<TestCaseProps> = ({ testCase }) => {
                 <Separator />
                 <div>
                     <h3 className="text-lg font-semibold">Patch Information</h3>
-                    <p className="mt-1 text-gray-600">Patch Length: {testCase.patch.length} characters</p>
-                    <p className="mt-1 text-gray-600">Test Patch Length: {testCase.test_patch.length} characters</p>
+                    <p className="mt-1 text-gray-600">Patch Length: {testCase.patch?.length} characters</p>
+                    <p className="mt-1 text-gray-600">Test Patch Length: {testCase.test_patch?.length} characters</p>
                 </div>
                 <Separator />
                 <div>
@@ -44,7 +45,7 @@ const SweBenchInstance: React.FC<TestCaseProps> = ({ testCase }) => {
                 </div>
                 <div>
                     <h3 className="text-lg font-semibold">Hints</h3>
-                    <p className="mt-1 text-gray-600">{testCase.hints_text}</p>
+                    <MarkdownPreviewer markdown={testCase.hints_text} />
                 </div>
             </CardContent>
         </Card>
