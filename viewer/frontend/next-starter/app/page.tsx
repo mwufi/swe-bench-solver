@@ -1,25 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-
-interface Repository {
-  id: string;
-  name: string;
-}
-
-interface TestCase {
-  repo: string;
-  instance_id: string;
-  base_commit: string;
-  patch: string;
-  test_patch: string;
-  problem_statement: string;
-  hints_text: string;
-  created_at: string;
-  version: string;
-  FAIL_TO_PASS: string;
-  PASS_TO_PASS: string;
-  environment_setup_commit: string;
-}
+import { Repository, TestCase } from './types';
 
 async function getRepositories(): Promise<Repository[]> {
   try {

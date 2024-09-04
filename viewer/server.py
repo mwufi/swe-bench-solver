@@ -80,13 +80,12 @@ async def get_test_cases_json(
     return {"test_cases": [tc.dict() for tc in filtered_cases]}
 
 
-@app.get("/test_case/{case_id}")
-async def get_test_case_details(case_id: int):
-    if 0 <= case_id < len(test_cases):
-        test_case = test_cases[case_id]
-        return {"test_case": test_case.dict()}
-    else:
-        return {"error": "Test case not found", "status_code": 404}
+@app.get("/test_case/{instance_id}")
+async def get_test_case_details(instance_id: str):
+    for test_case in test_cases:
+        if test_case.instance_id == instance_id:
+            return test_case
+    return {"error": "Test case not found", "status_code": 404}
 
 
 if __name__ == "__main__":
