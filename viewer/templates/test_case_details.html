@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Case Details</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff2html/3.4.17/diff2html.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/diff2html/3.4.17/diff2html.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .details {
+            margin-bottom: 20px;
+        }
+
+        .diff-view {
+            margin-top: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #f2f2f2;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="back-button">Back to Test Cases</a>
+    <h1>Test Case Details</h1>
+
+    <div class="details">
+        <h2>Repository: {{ test_case.repo }}</h2>
+        <p><strong>Instance ID:</strong> {{ test_case.instance_id }}</p>
+        <p><strong>Base Commit:</strong> {{ test_case.base_commit }}</p>
+        <p><strong>Problem Statement:</strong> {{ test_case.problem_statement }}</p>
+        <p><strong>Hints:</strong> {{ test_case.hints_text }}</p>
+        <p><strong>Created At:</strong> {{ test_case.created_at }}</p>
+        <p><strong>Version:</strong> {{ test_case.version }}</p>
+        <p><strong>FAIL_TO_PASS:</strong> {{ test_case.FAIL_TO_PASS }}</p>
+        <p><strong>PASS_TO_PASS:</strong> {{ test_case.PASS_TO_PASS }}</p>
+        <p><strong>Environment Setup Commit:</strong> {{ test_case.environment_setup_commit }}</p>
+    </div>
+
+    <div class="diff-view">
+        <h2>Patch</h2>
+        <div id="patch-diff"></div>
+    </div>
+
+    <div class="diff-view">
+        <h2>Test Patch</h2>
+        <div id="test-patch-diff"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const patchDiff = Diff2Html.parse("{{ test_case.patch|replace('\n', '\\n')|replace('"', '\\"') }}");
+            const testPatchDiff = Diff2Html.parse("{{ test_case.test_patch|replace('\n', '\\n')|replace('"', '\\"') }}");
+
+            const patchConfig = {
+                drawFileList: false,
+                matching: 'lines',
+                outputFormat: 'side-by-side'
+            };
+
+            document.getElementById('patch-diff').innerHTML = Diff2Html.html(patchDiff, patchConfig);
+            document.getElementById('test-patch-diff').innerHTML = Diff2Html.html(testPatchDiff, patchConfig);
+        });
+    </script>
+</body>
+
+</html>
