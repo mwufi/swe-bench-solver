@@ -7,9 +7,18 @@ interface Repository {
 }
 
 interface TestCase {
-    id: string;
-    name: string;
-    description: string;
+    repo: string;
+    instance_id: string;
+    base_commit: string;
+    patch: string;
+    test_patch: string;
+    problem_statement: string;
+    hints_text: string;
+    created_at: string;
+    version: string;
+    FAIL_TO_PASS: string;
+    PASS_TO_PASS: string;
+    environment_setup_commit: string;
 }
 
 const SWEBenchViewer: React.FC = () => {
@@ -20,8 +29,12 @@ const SWEBenchViewer: React.FC = () => {
 
     const fetchRepositories = async () => {
         try {
-            const response = await axios.get<Repository[]>('/api/repos');
-            setRepositories(response.data);
+            const response = await axios.get<{ repos: Repository[] }>('/api/repos');
+            if (response.data) {
+                const { repos } = response.data
+                console.log("response", repos)
+                setRepositories(repos);
+            }
         } catch (error) {
             console.error('Error fetching repositories:', error);
         }
@@ -32,6 +45,7 @@ const SWEBenchViewer: React.FC = () => {
         try {
             const url = '/api/test_cases' + (selectedRepo ? `?repo=${encodeURIComponent(selectedRepo)}` : '');
             const response = await axios.get<TestCase[]>(url);
+            console.log("response test_cases", response.data)
             setTestCases(response.data);
         } catch (error) {
             console.error('Error fetching test cases:', error);
@@ -67,9 +81,17 @@ const SWEBenchViewer: React.FC = () => {
                 ) : (
                     <ul>
                         {testCases.map((testCase) => (
-                            <li key={testCase.id}>
-                                <h3>{testCase.name}</h3>
-                                <p>{testCase.description}</p>
+                            <li key={testCase.instance_id} className="flex justify-between items-start p-4 border-b border-gray-200 hover:bg-gray-50">
+                                <div className="flex-1 mr-4">
+                                    <h3 className="text-lg font-semibold text-gray-800">{testCase.repo}</h3>
+                                    <p className="mt-1 text-sm text-gray-600 line-clamp-3">{testCase.problem_statement}</p>
+                                </div>
+                                <div className="flex flex-col items-end text-sm text-gray-500">
+                                    <span className="font-medium">{testCase.repo}</span>
+                                    <span className="mt-1">Commit: {testCase.base_commit.substring(0, 7)}</span>
+                                    <span className="mt-1">Patch: {testCase.patch.length} chars</span>
+                                    <span className="mt-1">{new Date(testCase.created_at).toLocaleDateString()}</span>
+                                </div>
                             </li>
                         ))}
                     </ul>
