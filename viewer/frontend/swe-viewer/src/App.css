@@ -1,0 +1,31 @@
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.swe-bench-viewer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.filters {
+  margin: 20px 0;
+}
+
+.test-cases ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.test-cases li {
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+  text-align: left;
+}

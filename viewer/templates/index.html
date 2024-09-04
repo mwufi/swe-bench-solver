@@ -5,48 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SWE-bench Viewer</title>
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
-    <style>
-        #content {
-            margin-top: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-        #filters {
-            margin-bottom: 20px;
-        }
-        select {
-            padding: 5px;
-            margin-right: 10px;
-        }
-        button {
-            padding: 5px 10px;
-            background-color: #f2f2f2;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
 </head>
 
 <body>
     <h1>SWE-bench Viewer</h1>
     <div id="filters">
-        <select id="repo-filter" name="repo" hx-get="/repos" hx-target="#repo-filter" hx-swap="innerHTML" hx-trigger="load">
+        <select id="repo-filter" name="repo" hx-get="/repos" hx-target="#repo-filter" hx-trigger="load">
             <option value="">All Repositories</option>
         </select>
     </div>
-    <div id="content" hx-get="/test_cases" hx-trigger="load, filterChanged from:body">
+    <div id="content" hx-get="/test_cases" hx-trigger="load, repoChanged from:body">
         Loading test cases...
     </div>
 
     <script>
-        document.body.addEventListener('htmx:afterOnLoad', function() {
-            document.getElementById('repo-filter').addEventListener('change', function() {
+        document.body.addEventListener('htmx:afterOnLoad', function () {
+            document.getElementById('repo-filter').addEventListener('change', function () {
                 var repo = this.value;
                 var contentDiv = document.getElementById('content');
-                contentDiv.setAttribute('hx-get', '/test_cases?repo=' + repo);
-                htmx.trigger('#content', 'filterChanged');
+                contentDiv.setAttribute('hx-get', '/test_cases' + (repo ? '?repo=' + encodeURIComponent(repo) : ''));
+                htmx.trigger(document.body, 'repoChanged');
             });
         });
     </script>

@@ -89,6 +89,7 @@ async def get_test_cases_html(
     min_patch_length: Optional[int] = Query(None, description="Minimum patch length"),
     max_patch_length: Optional[int] = Query(None, description="Maximum patch length"),
 ):
+    print("repo", repo)
     filtered_cases = await get_test_cases(repo, min_patch_length, max_patch_length)
     return templates.TemplateResponse("test_cases.html", {"request": request, "test_cases": filtered_cases})
 
