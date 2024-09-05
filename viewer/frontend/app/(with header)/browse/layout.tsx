@@ -17,6 +17,7 @@ async function getRepositories(): Promise<{ repos: Repository[], id: string, spl
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
+import Header from '../Header';
 
 export default async function BrowseLayout({
     children,
@@ -26,7 +27,7 @@ export default async function BrowseLayout({
     const repositories = await getRepositories();
 
     return (
-        <div className="flex h-screen">
+        <main className="flex flex-1">
             {/* Repositories Column */}
             <div className="w-[230px] bg-gray-100 overflow-y-auto hidden lg:block">
                 <Link href="/browse" className="block">
@@ -53,6 +54,6 @@ export default async function BrowseLayout({
             <div className="flex-1 overflow-y-auto">
                 {children}
             </div>
-        </div>
+        </main>
     );
 }
