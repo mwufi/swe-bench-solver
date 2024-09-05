@@ -2,12 +2,18 @@
 
 Help us solve the SWE Bench challenge!
 
-> (9/4) Right now, all we have is a viewer!
+## So far:
+> 9/4 Build a viewer!
 
-![SWE Bench Solver](./docs/swe-bench-solver.png)
+Next:
+- Check out and run each instance!
+- (Bonus) Build a forum for discussing this benchmark!
+
 ## 1. Viewer
 
 The viewer is a web app that allows you to browse the SWE Bench dataset.
+
+![SWE Bench Solver](./docs/swe-bench-solver.png)
 
 ### Run
 
@@ -15,6 +21,11 @@ The viewer is a web app that allows you to browse the SWE Bench dataset.
 cd viewer
 make run
 ```
+
+## Appendix: Forum
+
+We need your help to build a forum for discussing this benchmark!
+![SWE Bench Forum](./docs/forum.png)
 
 ## 2. SWE Bench Solver
 
