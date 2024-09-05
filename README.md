@@ -2,6 +2,8 @@
 
 Help us solve the SWE Bench challenge!
 
+> (9/4) Right now, all we have is a viewer!
+
 ![SWE Bench Solver](./docs/swe-bench-solver.png)
 ## 1. Viewer
 
