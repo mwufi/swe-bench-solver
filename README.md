@@ -1,6 +1,22 @@
 # swe-bench-solver
 
-## SWE Bench Solver
+Help us solve the SWE Bench challenge!
+
+![SWE Bench Solver](./docs/swe-bench-solver.png)
+## 1. Viewer
+
+The viewer is a web app that allows you to browse the SWE Bench dataset.
+
+### Run
+
+```bash
+cd viewer
+make run
+```
+
+## 2. SWE Bench Solver
+
+(TBD)
 
 This document outlines our approach to solving the SWE (Software Engineering) Bench challenge.
 
