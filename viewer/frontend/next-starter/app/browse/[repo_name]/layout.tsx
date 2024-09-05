@@ -28,10 +28,10 @@ export default function BrowseLayout({ children, params }: { children: React.Rea
     }, [params.repo_name]);
 
     return (
-        <div className="flex h-screen">
+        <div className="h-screen flex flex-col lg:flex-row">
             {/* Problems Column */}
-            <div className="w-[400px] bg-white border-l border-r border-gray-200 p-4 overflow-y-auto">
-                <h2 className="text-xl font-semibold mb-4 flex items-center">
+            <div className="w-full lg:w-[400px] bg-white border-l border-r border-gray-200 overflow-y-auto h-[200px] lg:h-full p-4">
+                <h2 className="text-xl font-semibold flex items-center sticky top-0 bg-white z-10">
                     Problems
                     <span className="ml-2 px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">
                         {testCases.length}

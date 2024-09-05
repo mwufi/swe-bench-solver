@@ -63,7 +63,46 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.diff-line {
+  @apply whitespace-pre-wrap;
+}
+
+.diff-line.diff-line-normal {
+  @apply text-zinc-400;
+}
+
+.diff-gutter-column {
+  @apply w-10;
+}
+
+.diff-gutter {
+  @apply text-zinc-400 text-xs mx-2;
+}
+
+/* insert lines */
+.diff-line.diff-line-new-only {
+  @apply bg-green-100;
+  @apply text-green-700;
+}
+
+.diff-code.diff-code-insert {
+  @apply bg-green-100;
+  @apply text-green-700;
+}
+
+/* delete lines */
+.diff-line.diff-line-old-only {
+  @apply bg-red-100;
+  @apply text-red-700;
+}
+
+.diff-code.diff-code-delete {
+  @apply bg-red-100;
+  @apply text-red-700;
 }

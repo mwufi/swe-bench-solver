@@ -28,7 +28,7 @@ export default async function BrowseLayout({
     return (
         <div className="flex h-screen">
             {/* Repositories Column */}
-            <div className="w-[230px] bg-gray-100 overflow-y-auto">
+            <div className="w-[230px] bg-gray-100 overflow-y-auto hidden lg:block">
                 <Link href="/browse" className="block">
                     <h2 className="text-lg font-semibold mb-4 text-left p-4 hover:underline">SWE Bench Viewer</h2>
                 </Link>
