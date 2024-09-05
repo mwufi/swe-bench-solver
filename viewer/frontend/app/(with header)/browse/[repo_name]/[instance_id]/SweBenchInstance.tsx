@@ -40,7 +40,7 @@ const SweBenchInstance: React.FC<TestCaseProps> = ({ testCase }) => {
                         <AccordionItem value="patch">
                             <AccordionTrigger>Patch Lines: {testCase.patch?.split('\n').length} lines</AccordionTrigger>
                             <AccordionContent>
-                                <DiffView diffText={testCase.patch} />
+                                <DiffView diffText={testCase.patch} baseUrl={`https://github.com/${testCase.repo}/tree/${testCase.base_commit}`} />
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
@@ -48,7 +48,7 @@ const SweBenchInstance: React.FC<TestCaseProps> = ({ testCase }) => {
                         <AccordionItem value="patch">
                             <AccordionTrigger>Test Patch Lines: {testCase.test_patch?.split('\n').length} lines</AccordionTrigger>
                             <AccordionContent>
-                                <DiffView diffText={testCase.test_patch} />
+                                <DiffView diffText={testCase.test_patch} baseUrl={`https://github.com/${testCase.repo}/tree/${testCase.environment_setup_commit}`} />
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
@@ -56,8 +56,8 @@ const SweBenchInstance: React.FC<TestCaseProps> = ({ testCase }) => {
                 <Separator />
                 <div>
                     <h3 className="text-lg font-semibold">Test Results</h3>
-                    <MultiTestDisplay title="FAIL_TO_PASS" testResults={testCase.FAIL_TO_PASS} defaultPassed={false} />
-                    <MultiTestDisplay title="PASS_TO_PASS" testResults={testCase.PASS_TO_PASS} defaultPassed={true} />
+                    <MultiTestDisplay title="FAIL -> PASS" testResults={testCase.FAIL_TO_PASS} defaultPassed={true} />
+                    <MultiTestDisplay title="PASS -> PASS" testResults={testCase.PASS_TO_PASS} defaultPassed={true} />
                 </div>
                 <div>
                     <h3 className="text-lg font-semibold">Hints</h3>
