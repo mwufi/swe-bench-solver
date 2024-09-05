@@ -18,14 +18,14 @@ async function getTestCases(selectedRepo: string = ''): Promise<{ test_cases: Te
     }
 }
 
-export default function BrowseLayout({ children, params }: { children: React.ReactNode, params: { repo: string } }) {
+export default function BrowseLayout({ children, params }: { children: React.ReactNode, params: { repo_name: string } }) {
     const [testCases, setTestCases] = useState<TestCase[]>([]);
     useEffect(() => {
-        getTestCases(params.repo).then((data) => {
+        getTestCases(params.repo_name).then((data) => {
             console.log(data)
             setTestCases(data.test_cases);
         });
-    }, [params.repo]);
+    }, [params.repo_name]);
 
     return (
         <div className="flex h-screen">
