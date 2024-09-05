@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Playground V0",
-  description: "make your ideas come to life",
+  title: "SWE Bench Viewer",
+  description: "View SWE Bench submissions",
 };
 
 export default function RootLayout({
